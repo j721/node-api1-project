@@ -26,7 +26,7 @@ function getUsers(){
 }
 
 function getUserById(id){
-    return users.finder((user)=>user.id ===id )
+    return users.find((user)=>user.id ===id )
 }
 
 server.get("/", (req, res)=>{
