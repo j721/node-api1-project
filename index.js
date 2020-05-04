@@ -1,14 +1,33 @@
 const express = require ("express");
-const db = require('./database');
+const shortid = require("shortid");
 const server = express(); 
 
 server.use(express.json());
 
 let users =[{
-    id: 1, 
+    id: shortid.generate(), 
     name: "Joe Smith",
-    bio: "Web Developer"
-}];
+    bio: "Frontend Developer"
+},
+{
+    id: shortid.generate(), 
+    name: "Violet Rose",
+    bio: "UX Designer"
+},
+{
+    id: shortid.generate(),  
+    name: "Mark Red",
+    bio: "Backend Developer"
+}
+];
+
+function getUsers(){
+    return users; 
+}
+
+function getUserById(id){
+    return users.finder((user)=>user.id ===id )
+}
 
 server.get("/", (req, res)=>{
     res.json({api: "api is working!" })
