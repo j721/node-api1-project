@@ -63,23 +63,23 @@ server.get('/api/users/:id', (req,res)=>{
 
 
 
-function createUser(data) {
-  const payload = {
-    id: shortid.generate(),
-    ...data,
-  };
+// function createUser(data) {
+//   const payload = {
+//     id: shortid.generate(),
+//     ...data,
+//   };
 
-  users.push(payload);
-  return payload;
-}
+//   users.push(payload);
+//   return payload;
+// }
 
 //post
 server.post("/api/users", function (req, res) {
-  const userInformation = createUser({
+  const userInformation = {
     id: shortid.generate(),
     name: req.body.name,
     bio: req.body.bio,
-  });
+  };
 
   if (!req.body.name || !req.body.bio) {
     res
