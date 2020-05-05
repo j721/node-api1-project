@@ -26,9 +26,9 @@ function getUsers() {
   return users;
 }
 
-function getUserById(id) {
-  return users.find((user) => user.id === id);
-}
+// function getUserById(id) {
+//   return users.find((user) => user.id === id);
+// }
 
 server.get("/", (req, res) => {
   res.json({ api: "api is working!" });
@@ -36,8 +36,30 @@ server.get("/", (req, res) => {
 
 server.get("/api/users", function (req, res) {
   //returns an array of users (id, name, bio)
-  res.json(users);
+  if(users){
+      res.json(users);
+  }else{
+    res.status(500).json({errorMessage: "The users information could not be retrieved."})
+  }
 });
+
+server.get('/api/users/:id', (req,res)=>{
+    const id = req.params.id; 
+    //filter method to find user from array
+    let [ user ] = users.filter(name =>name.id === id);
+
+    if(user){
+        res.status(201).json(user);
+    }else if (!user){
+        res.status(404).json({errorMessage: "The user with the specified ID does not exist. "})
+    }else{
+        res.status(500).json({errorMessage:"The user information could not be retrieved."})
+    }
+
+})
+
+
+
 
 function createUser(data) {
   const payload = {
@@ -49,23 +71,24 @@ function createUser(data) {
   return payload;
 }
 
+//post
 server.post("/api/users", function (req, res) {
-
-    if(!req.body.name || !req.body.bio){
-        res.status(400).json({errorMessage: "Please provide name and bio"})
-    }
-
   const userInformation = createUser({
-        id: shortid.generate(), 
-        name: req.body.name,
-      bio: req.body.bio,
-  })
-  
-//   req.body;
+    id: shortid.generate(),
+    name: req.body.name,
+    bio: req.body.bio,
+  });
 
-  users.push(userInformation);
-
-  res.status(201).json(userInformation);
+  if (!req.body.name || !req.body.bio) {
+    res
+      .status(400)
+      .json({ errorMessage: "Please provide name and bio for the user." });
+  } else if (userInformation) {
+    res.status(201).json(userInformation);
+    users.push(userInformation);
+  } else {
+      res.status(500).json({errorMessage: "There was an error while saving the user to the database."})
+  }
 });
 
 server.delete("/api/users/:id", function (req, res) {
