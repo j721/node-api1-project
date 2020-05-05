@@ -30,6 +30,8 @@ function getUsers() {
 //   return users.find((user) => user.id === id);
 // }
 
+
+
 server.get("/", (req, res) => {
   res.json({ api: "api is working!" });
 });
@@ -46,7 +48,7 @@ server.get("/api/users", function (req, res) {
 server.get('/api/users/:id', (req,res)=>{
     const id = req.params.id; 
     //filter method to find user from array
-    let [ user ] = users.filter(name =>name.id === id);
+    let [ user ] = users.filter(username =>username.id === id);
 
     if(user){
         res.status(201).json(user);
@@ -91,12 +93,55 @@ server.post("/api/users", function (req, res) {
   }
 });
 
+//delete
+
 server.delete("/api/users/:id", function (req, res) {
   const id = Number(req.params.id);
 
   users = users.filter((user) => user.id !== id);
 
-  res.status(200).json(users);
+  if(!users){
+      res.status(404).json({errorMessage: "The user with the specified ID does not exist. "})
+  }else{
+
+      res.status(200).json(users);
+  }
 });
+
+//put
+
+server.put("/api/users/:id:", (req, res)=>{
+    const id = req.params.id;
+    const updated = req.body;
+    //find specified user from an array
+    const user = users.find(name=>name.id === id);
+
+    if(user){
+        if(updated.name && updated.bio){
+            Object.assign(user, update)
+            res.status(200).json(user)
+        }else{
+            res.status(400).json({errorMessage: "Please provide name and bio for the user."})
+        }
+    }else if(!user){
+        res.statusMessage(404).json({errorMessage:"The user with the specified ID does not exist."})
+    }else{
+        res.status(500).json({errorMessage: "The user information could not be modified."})
+    }
+
+
+    // if(!user){
+    //     res.statusMessage(404).json({errorMessage:"The user with the specified ID does not exist."})
+    // }else if (!name || !bio){
+    //     res.status(400).json({errorMessage: "Please provide name and bio for the user."})
+    // }else{
+    //     user.name = name;
+    //     user.bio = bio;
+    //     res.status(200).json(user);
+    // }
+
+} )
+
+
 
 server.listen(8000, () => console.log("\n==API is up==\n"));
