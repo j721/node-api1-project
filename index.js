@@ -104,11 +104,11 @@ server.delete("/api/users/:id", function (req, res) {
 
 //put
 
-server.put("/api/users/:id:", (req, res) => {
+server.put("/api/users/:id", (req, res) => {
   const id = req.params.id;
   const updated = req.body;
   //find specified user from an array
-  const user = users.find((name) => name.id === id);
+  const user = users.find((user) => user.id === id);
 
   if (user) {
     if (updated.name && updated.bio) {
@@ -142,7 +142,7 @@ server.put("/api/users/:id:", (req, res) => {
 
 //patch
 
-server.patch("/api/users/:id:", (req, res) => {
+server.patch("/api/users/:id", (req, res) => {
   const id = req.params.id;
   const updated = req.body;
   const user = users.find((name) => name.id === id);
