@@ -85,7 +85,7 @@ server.post("/api/users", function (req, res) {
 //delete
 
 server.delete("/api/users/:id", function (req, res) {
-  const id = Number(req.params.id);
+  const id = (req.params.id);
 
   users = users.filter((user) => user.id !== id);
 
