@@ -83,7 +83,6 @@ server.post("/api/users", function (req, res) {
 });
 
 //delete
-
 server.delete("/api/users/:id", function (req, res) {
   const id = (req.params.id);
 
@@ -103,7 +102,6 @@ server.delete("/api/users/:id", function (req, res) {
 });
 
 //put
-
 server.put("/api/users/:id", function(req,res){
     const id = req.params.id;
     const { name, bio } = req.body;
@@ -124,7 +122,6 @@ server.put("/api/users/:id", function(req,res){
 })
 
 //patch
-
 server.patch("/api/users/:id", (req, res) => {
   const id = req.params.id;
   const { name, bio } = req.body;
@@ -142,19 +139,6 @@ server.patch("/api/users/:id", (req, res) => {
         res.status(200).json(user);
     }
     
-//   const updated = req.body;
-//   const user = users.find((name) => name.id === id);
-
-//   if (user) {
-//     Object.assign(user, update);
-//     res.status(200).json(user);
-//   } else if (!user) {
-//     res
-//       .status(404)
-//       .json({ errorMessage: "The user with the specified ID does not exist." });
-//   } else {
-//     res.status(500).json(errorMessage);
-//   }
 });
 
 server.listen(8000, () => console.log("\n==API is up==\n"));
