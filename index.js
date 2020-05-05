@@ -102,9 +102,10 @@ server.delete("/api/users/:id", function (req, res) {
 
   if(!users){
       res.status(404).json({errorMessage: "The user with the specified ID does not exist. "})
-  }else{
-
+  }else if (users){       
       res.status(200).json(users);
+  }else{
+      res.status(500).json({errorMessage:"The user could not be removed."})
   }
 });
 
@@ -151,7 +152,7 @@ server.patch("/api/users/:id:", (req, res)=>{
 
     if(user){
         Object.assign(user, update)
-        res.status(201).json(user)
+        res.status(200).json(user)
     }else if (!user){
         res.status(404).json({errorMessage:"The user with the specified ID does not exist."})
     }else{
