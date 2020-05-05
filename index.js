@@ -142,6 +142,22 @@ server.put("/api/users/:id:", (req, res)=>{
 
 } )
 
+//patch
 
+server.patch("/api/users/:id:", (req, res)=>{
+    const id = req.params.id;
+    const updated = req.body;
+    const user = users.find(name=>name.id === id);
+
+    if(user){
+        Object.assign(user, update)
+        res.status(201).json(user)
+    }else if (!user){
+        res.status(404).json({errorMessage:"The user with the specified ID does not exist."})
+    }else{
+        res.status(500).json(errorMessage)
+    }
+
+})
 
 server.listen(8000, () => console.log("\n==API is up==\n"));
