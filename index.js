@@ -22,16 +22,6 @@ let users = [
   },
 ];
 
-function getUsers() {
-  return users;
-}
-
-// function getUserById(id) {
-//   return users.find((user) => user.id === id);
-// }
-
-
-
 server.get("/", (req, res) => {
   res.json({ api: "api is working!" });
 });
@@ -59,19 +49,6 @@ server.get('/api/users/:id', (req,res)=>{
     }
 
 })
-
-
-
-
-// function createUser(data) {
-//   const payload = {
-//     id: shortid.generate(),
-//     ...data,
-//   };
-
-//   users.push(payload);
-//   return payload;
-// }
 
 //post
 server.post("/api/users", function (req, res) {
